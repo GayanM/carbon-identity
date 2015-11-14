@@ -2331,8 +2331,9 @@ public class IdPManagementDAO {
                 prepStmt1.setString(2, deletedRole);
                 prepStmt1.addBatch();
             }
-
-            prepStmt1.executeBatch();
+            if(prepStmt1 != null){
+                prepStmt1.executeBatch();
+            }
 
             for (String addedRole : addedRoles) {
                 sqlStmt = IdPManagementConstants.SQLQueries.ADD_IDP_ROLES_SQL;
@@ -2342,9 +2343,11 @@ public class IdPManagementDAO {
                 prepStmt2.addBatch();
             }
 
-            prepStmt2.executeBatch();
-            prepStmt2.clearParameters();
-            prepStmt2.clearBatch();
+            if(prepStmt2 != null){
+                prepStmt2.executeBatch();
+                prepStmt2.clearParameters();
+                prepStmt2.clearBatch();
+            }
 
             for (int i = 0; i < renamedOldRoles.size(); i++) {
                 sqlStmt = IdPManagementConstants.SQLQueries.UPDATE_IDP_ROLES_SQL;
@@ -2355,7 +2358,9 @@ public class IdPManagementDAO {
                 prepStmt3.addBatch();
             }
 
-            prepStmt3.executeBatch();
+            if(prepStmt3 != null){
+                prepStmt3.executeBatch();
+            }
 
         } finally {
             IdentityDatabaseUtil.closeStatement(prepStmt3);
